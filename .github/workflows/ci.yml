@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# A new push to the same branch makes the previous run pointless.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Restore Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-${{ hashFiles('src/**/*.[jt]s?(x)', 'content/**/*.mdx') }}
+          restore-keys: |
+            next-${{ runner.os }}-${{ hashFiles('yarn.lock') }}-
+
+      # Cheapest checks first, so a stray semicolon fails in seconds
+      # rather than after a full compile.
+      - name: Formatting
+        run: yarn format:check
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Types
+        run: yarn typecheck
+
+      # Also the content check: invalid frontmatter throws here rather than
+      # shipping an article dated "Invalid Date".
+      - name: Build
+        run: yarn build
