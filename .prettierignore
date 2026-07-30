@@ -1,0 +1,8 @@
+.next
+node_modules
+yarn.lock
+
+# Prose belongs to the author. Prettier only rewrites cosmetics here
+# (*emphasis* becomes _emphasis_) and would churn every article it touches.
+# Markdown conventions are markdownlint's job, not the code formatter's.
+content/

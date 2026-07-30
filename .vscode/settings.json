@@ -1,0 +1,29 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.linkedEditing": true,
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+
+  "files.associations": { "*.css": "tailwindcss" },
+  "tailwindCSS.classAttributes": ["class", "className", "classList"],
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
+  "[mdx]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "ltex.language": "en-GB",
+  "ltex.enabled": ["markdown", "mdx", "latex"],
+  "cSpell.words": [
+    "arithmetization",
+    "bitroot",
+    "Goldilocks",
+    "katex",
+    "Plonkish",
+    "shiki",
+    "zkc"
+  ]
+}

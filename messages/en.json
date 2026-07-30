@@ -1,0 +1,26 @@
+{
+  "site": {
+    "tagline": "Notes from building things close to the metal."
+  },
+  "nav": {
+    "writing": "Writing",
+    "about": "About",
+    "toggleTheme": "Toggle theme",
+    "switchLanguage": "Deutsch"
+  },
+  "index": {
+    "title": "Writing",
+    "intro": "Long-form accounts of things I built, and what building them turned up.",
+    "allTags": "All",
+    "empty": "Nothing published yet."
+  },
+  "post": {
+    "readingTime": "{minutes} min read",
+    "contents": "Contents",
+    "notTranslated": "This article is not available in German yet.",
+    "back": "All writing"
+  },
+  "footer": {
+    "colophon": "Built with Next.js, typeset in IBM Plex."
+  }
+}

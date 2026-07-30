@@ -1,0 +1,26 @@
+{
+  "site": {
+    "tagline": "Notizen aus der Arbeit nah an der Maschine."
+  },
+  "nav": {
+    "writing": "Artikel",
+    "about": "Über mich",
+    "toggleTheme": "Darstellung wechseln",
+    "switchLanguage": "English"
+  },
+  "index": {
+    "title": "Artikel",
+    "intro": "Ausführliche Berichte über gebaute Dinge — und darüber, was beim Bauen herauskam.",
+    "allTags": "Alle",
+    "empty": "Noch nichts veröffentlicht."
+  },
+  "post": {
+    "readingTime": "{minutes} Min. Lesezeit",
+    "contents": "Inhalt",
+    "notTranslated": "Dieser Artikel liegt noch nicht auf Deutsch vor.",
+    "back": "Alle Artikel"
+  },
+  "footer": {
+    "colophon": "Gebaut mit Next.js, gesetzt in IBM Plex."
+  }
+}
