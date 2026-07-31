@@ -8,11 +8,17 @@ Next.js 16 (App Router) · React 19 · TypeScript · Tailwind 4 · MDX · next-i
 ## Running it
 
 ```bash
+git clone git@github.com:bitr00t/bitr00t-content.git content
 yarn install
 yarn dev        # http://localhost:3000 → redirects to /en
 yarn build      # static export of every article, both languages
 yarn lint
 ```
+
+The first line is not optional. Articles live in a separate private
+repository which is checked out into `content/`; without it the build stops
+with an explanatory error rather than quietly producing an empty site.
+`yarn content:pull` fetches the latest articles.
 
 Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL`. Feeds,
 canonical links and social previews need absolute URLs, which cannot be inferred
@@ -37,8 +43,8 @@ cheapest first. `main` is therefore always in a state that can be deployed.
 
 ## How it is put together
 
-```
-content/posts/<slug>.<locale>.mdx   articles — the source of truth
+```text
+content/posts/<slug>.<locale>.mdx   articles — separate private repo
 messages/<locale>.json              interface strings
 src/
   app/[locale]/                     routes; every page is statically generated
@@ -54,6 +60,19 @@ src/
     shiki-theme.ts                  code themes, generated from palette.ts
     fonts.ts                        self-hosted IBM Plex
 ```
+
+## Where the articles live
+
+This repository holds the site; `bitr00t-content` holds the writing. Two
+reasons: drafts should not be readable before publication, and the prose is not
+under the same licence as the code.
+
+The split is a checkout, not a submodule — a submodule would pin one content
+revision, and a blog should build the newest articles rather than the ones the
+code repository happens to remember. CI does the same thing with a
+`CONTENT_REPO_TOKEN` secret.
+
+Nothing in the code knows about the split. `content/` is `content/` either way.
 
 ## Writing an article
 
@@ -89,7 +108,6 @@ Source listings are numbered and captioned; program output is not, because
 ```rust
 gadget is_zero(x: field) -> (out: field) { … }
 ```
-````
 
 </Listing>
 
@@ -103,7 +121,7 @@ error: 'root' is under-constrained
 ```
 
 </Terminal>
-```
+````
 
 Numbering happens at build time in document order, so listings can be moved
 without renumbering anything. `<Ref>` resolves to whatever number its target
