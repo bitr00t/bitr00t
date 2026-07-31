@@ -1,0 +1,12 @@
+{
+  "config": {
+    // Prose is hard-wrapped by hand; the formatter deliberately does not
+    // touch content, so a hard line-length rule would fight the author.
+    "MD013": false,
+    // Setext vs ATX, ordered-list numbering: Prettier already normalises these.
+    "MD003": { "style": "atx" },
+    "MD029": { "style": "ordered" },
+  },
+  "globs": ["**/*.md"],
+  "ignores": ["node_modules", ".next", "content"],
+}
