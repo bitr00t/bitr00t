@@ -10,6 +10,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
 import { getAllSlugs, getPost, getTranslation } from "@/lib/content";
 import { mdxOptions } from "@/lib/mdx";
+import { feedAlternates } from "@/lib/site";
 
 export async function generateStaticParams() {
   return getAllSlugs();
@@ -37,7 +38,11 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.description,
-    alternates: { canonical: `/${locale}/writing/${slug}`, languages },
+    alternates: {
+      canonical: `/${locale}/writing/${slug}`,
+      languages,
+      types: feedAlternates(locale),
+    },
     openGraph: {
       title: post.title,
       description: post.description,
