@@ -44,7 +44,20 @@ async function listFiles(): Promise<
   try {
     names = await fs.readdir(POSTS_DIR);
   } catch {
-    return [];
+    // Articles are not in this repository. Returning an empty list here would
+    // build a perfectly valid site with no writing on it and deploy it without
+    // complaint, so this fails loudly instead.
+    throw new Error(
+      [
+        `No articles found at ${POSTS_DIR}.`,
+        "",
+        "Articles live in a separate private repository. Locally:",
+        "  git clone git@github.com:bitr00t/bitr00t-content.git content",
+        "",
+        'In CI this is the "Check out articles" step — a failure there usually',
+        "means the CONTENT_REPO_TOKEN secret is missing or has expired.",
+      ].join("\n"),
+    );
   }
 
   return names.flatMap((file) => {

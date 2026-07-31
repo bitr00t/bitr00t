@@ -26,6 +26,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Second checkout, into the path the site expects. Deliberately not a
+      # submodule: a submodule pins a content revision, and a blog should
+      # always build the newest articles rather than the ones the code repo
+      # happens to remember.
+      - name: Check out articles
+        uses: actions/checkout@v7
+        with:
+          repository: bitr00t/bitr00t-content
+          path: content
+          token: ${{ secrets.CONTENT_REPO_TOKEN }}
+          persist-credentials: false
+
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
