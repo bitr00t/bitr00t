@@ -149,10 +149,19 @@ is not a fruit salad.
 
 ## Not here yet
 
-Sitemap, OG images, search, comments (Giscus), the legal pages, and the
-container build. Each is a separate step; none of them changes anything above.
+OG images, search, comments (Giscus), the legal pages, and the container
+build. Each is a separate step; none of them changes anything above.
 
-## Feeds
+## Discovery
+
+`/sitemap.xml` covers both languages in one file, each entry carrying the full
+set of hreflang alternates including a link back to itself — which is what makes
+the two language versions read as one document in two languages rather than as
+two competing for the same query. A language with nothing published is left out
+until it has an article; an empty index is not worth submitting.
+
+`changeFrequency` and `priority` are deliberately absent. Google ignores both,
+and a number nobody reads is a number that will eventually be wrong.
 
 `/{locale}/feed.xml`, prerendered with the rest of the site. Entries carry the
 frontmatter description rather than the full article: these pieces lean on
