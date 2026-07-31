@@ -171,8 +171,3 @@ export async function getAllSlugs(): Promise<
     .filter(isPublished)
     .map(({ slug, locale }) => ({ slug, locale }));
 }
-
-export async function getAllTags(locale: Locale): Promise<string[]> {
-  const posts = await getAllPosts(locale);
-  return [...new Set(posts.flatMap((p) => p.tags))].sort();
-}

@@ -12,7 +12,9 @@
     "title": "Writing",
     "intro": "Long-form accounts of things I built, and what building them turned up.",
     "allTags": "All",
-    "empty": "Nothing published yet."
+    "empty": "Nothing published yet.",
+    "taggedTitle": "Tagged “{tag}”",
+    "taggedIntro": "{count, plural, one {# article} other {# articles}} on this topic."
   },
   "post": {
     "readingTime": "{minutes} min read",

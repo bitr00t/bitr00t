@@ -97,6 +97,12 @@ piece in production while leaving it visible in `yarn dev`.
 Frontmatter is validated at build time. A missing date fails the build rather
 than shipping an article dated `Invalid Date`.
 
+Every entry in `tags` becomes a page at `/{locale}/writing/tag/{slug}`, built
+with the rest of the site. Tags are per-language: the slug comes from the word
+as written, so a German article carries German topics. Those pages are
+`noindex` and absent from the sitemap — they restate the index with fewer
+entries, which is useful to a reader and not to a crawler.
+
 ### Listings, output, and maths
 
 Source listings are numbered and captioned; program output is not, because
