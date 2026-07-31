@@ -1,0 +1,33 @@
+# Project vocabulary. One word per line; the editor appends here via Quick Fix.
+# Note that cspell splits on digits, so "bitr00t" is checked as "bitr".
+
+apos
+arithmetization
+bitr
+bitroot
+fontsource
+frontmatter
+Giscus
+Goldilocks
+hreflang
+iszero
+katex
+ltex
+mdast
+nvmrc
+Plonkish
+prerendered
+prerenders
+punct
+quot
+rehype
+remark
+renormalize
+shiki
+tsbuildinfo
+tsdk
+Turbopack
+typegen
+vendored
+Vercel
+zkc

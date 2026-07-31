@@ -19,14 +19,5 @@
 
   "[mdx]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "ltex.language": "en-GB",
-  "ltex.enabled": ["markdown", "mdx", "latex"],
-  "cSpell.words": [
-    "arithmetization",
-    "bitroot",
-    "Goldilocks",
-    "katex",
-    "Plonkish",
-    "shiki",
-    "zkc"
-  ]
+  "ltex.enabled": ["markdown", "mdx", "latex"]
 }
