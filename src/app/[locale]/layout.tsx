@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { mono, serif } from "@/styles/fonts";
 import { routing } from "@/i18n/routing";
+import { feedAlternates, site } from "@/lib/site";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -20,8 +21,12 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "site" });
 
   return {
-    title: { default: "bitr00t", template: "%s — bitr00t" },
+    // Makes every relative URL in page metadata resolve to an absolute one,
+    // which canonical links, hreflang and social previews all require.
+    metadataBase: new URL(site.url),
+    title: { default: site.name, template: `%s — ${site.name}` },
     description: t("tagline"),
+    alternates: { types: feedAlternates(locale) },
   };
 }
 

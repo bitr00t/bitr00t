@@ -14,8 +14,26 @@ yarn build      # static export of every article, both languages
 yarn lint
 ```
 
-Node 20+. No database, no external services: articles are files in `content/`,
-fonts are vendored, and the whole site prerenders.
+Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL`. Feeds,
+canonical links and social previews need absolute URLs, which cannot be inferred
+from the request. Without it everything falls back to `http://localhost:3000`,
+which is correct for development and wrong everywhere else.
+
+Node version is pinned in `.nvmrc`; CI reads the same file.
+No database, no external services: articles are files in `content/`, fonts are
+vendored, and the whole site prerenders.
+
+## Quality gate
+
+```bash
+yarn format:check   # prettier, code only — prose is the author's
+yarn lint           # eslint
+yarn typecheck      # next typegen && tsc --noEmit
+yarn build          # also validates every article's frontmatter
+```
+
+Those four run on every pull request and on every push to `main`, in that order,
+cheapest first. `main` is therefore always in a state that can be deployed.
 
 ## How it is put together
 
@@ -113,6 +131,13 @@ is not a fruit salad.
 
 ## Not here yet
 
-RSS, sitemap, OG images, search (Pagefind), comments (Giscus), the legal pages,
-CI/CD and the container build. Each is a separate step; none of them changes
-anything above.
+Sitemap, OG images, search, comments (Giscus), the legal pages, and the
+container build. Each is a separate step; none of them changes anything above.
+
+## Feeds
+
+`/{locale}/feed.xml`, prerendered with the rest of the site. Entries carry the
+frontmatter description rather than the full article: these pieces lean on
+syntax highlighting, numbered listings and KaTeX, all of which depend on
+stylesheets a feed reader will not load. A truncated-looking full-text feed is
+worse than an honest summary that links to the real thing.
