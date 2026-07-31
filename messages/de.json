@@ -12,7 +12,9 @@
     "title": "Artikel",
     "intro": "Ausführliche Berichte über gebaute Dinge — und darüber, was beim Bauen herauskam.",
     "allTags": "Alle",
-    "empty": "Noch nichts veröffentlicht."
+    "empty": "Noch nichts veröffentlicht.",
+    "taggedTitle": "Thema „{tag}“",
+    "taggedIntro": "{count, plural, one {# Artikel} other {# Artikel}} zu diesem Thema."
   },
   "post": {
     "readingTime": "{minutes} Min. Lesezeit",
