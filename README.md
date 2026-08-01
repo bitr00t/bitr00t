@@ -155,7 +155,19 @@ is not a fruit salad.
 
 ## Not here yet
 
-Search, comments (Giscus), the legal pages, and the container build. Each is a separate step; none of them changes anything above.
+Comments (Giscus), the legal pages, and the container build. Each is a separate step; none of them changes anything above.
+
+## Search
+
+MiniSearch over a per-language index at `/{locale}/search-index.json`, built
+with the site and fetched on first open — nobody who does not search should pay
+for it. Cmd/Ctrl-K opens the dialog.
+
+Code blocks and maths are stripped from the index: a search for `assert` should
+not match every listing in every article, and indexing them roughly doubles the
+payload for results nobody wants. Inline code stays, since a term like `is_zero`
+in a sentence is worth finding. Title and tag matches are weighted above body
+matches, which otherwise dominate once articles get long.
 
 ## Discovery
 
