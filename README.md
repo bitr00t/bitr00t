@@ -155,8 +155,7 @@ is not a fruit salad.
 
 ## Not here yet
 
-OG images, search, comments (Giscus), the legal pages, and the container
-build. Each is a separate step; none of them changes anything above.
+Search, comments (Giscus), the legal pages, and the container build. Each is a separate step; none of them changes anything above.
 
 ## Discovery
 
@@ -168,6 +167,12 @@ until it has an article; an empty index is not worth submitting.
 
 `changeFrequency` and `priority` are deliberately absent. Google ignores both,
 and a number nobody reads is a number that will eventually be wrong.
+
+Social previews are drawn at build time from `src/lib/og.ts`, one per article
+plus one per language for everything else. They are always light: a preview is
+pasted into someone else's timeline, where a dark card disappears into half the
+backgrounds it lands on. Note that the image renderer cannot read WOFF2, so the
+cards use the plain WOFF cuts of the same faces from `src/fonts/og`.
 
 `/{locale}/feed.xml`, prerendered with the rest of the site. Entries carry the
 frontmatter description rather than the full article: these pieces lean on
