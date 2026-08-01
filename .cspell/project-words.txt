@@ -14,6 +14,7 @@ iszero
 katex
 ltex
 mdast
+minisearch
 nvmrc
 Plonkish
 prerendered

@@ -24,5 +24,13 @@
   },
   "footer": {
     "colophon": "Built with Next.js, typeset in IBM Plex."
+  },
+  "search": {
+    "label": "search",
+    "open": "Search articles",
+    "placeholder": "Search articles…",
+    "hint": "Type to search titles, topics and article text.",
+    "noResults": "Nothing matches “{query}”.",
+    "failed": "Search is unavailable. Reload the page to try again."
   }
 }

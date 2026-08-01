@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Search } from "./Search";
 import { ThemeToggle } from "./ThemeToggle";
 
 export async function SiteHeader({ switchHref }: { switchHref?: string }) {
@@ -19,6 +20,7 @@ export async function SiteHeader({ switchHref }: { switchHref?: string }) {
         >
           {t("writing")}
         </Link>
+        <Search />
         <LanguageSwitcher href={switchHref} />
         <ThemeToggle />
       </nav>
