@@ -155,7 +155,28 @@ is not a fruit salad.
 
 ## Not here yet
 
-Comments (Giscus) and the container build. Each is a separate step; none of them changes anything above.
+Comments and deployment to the server. Each is a separate step; none of them changes anything above.
+
+## Container
+
+```bash
+docker build --build-arg NEXT_PUBLIC_SITE_URL=https://bitr00t.dev -t bitr00t .
+docker run -p 3000:3000 bitr00t
+```
+
+Or `docker compose up --build`, which reads `NEXT_PUBLIC_SITE_URL` from the
+environment.
+
+Two things about this build are easy to get wrong and are commented in the
+Dockerfile. `NEXT_PUBLIC_SITE_URL` is a **build** argument, not a runtime
+variable: Next inlines it into the bundle, so an image built with the wrong
+value has the wrong URL in every feed entry, sitemap entry and preview card,
+and no runtime setting will correct it. And `.next/static` is not part of the
+standalone output — it has to be copied separately, or the image serves HTML
+with no stylesheet.
+
+The articles must be checked out into `content/` before building, and
+`.dockerignore` deliberately does not exclude it.
 
 ## Standing pages
 
