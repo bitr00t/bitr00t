@@ -155,7 +155,27 @@ is not a fruit salad.
 
 ## Not here yet
 
-Comments (Giscus), the legal pages, and the container build. Each is a separate step; none of them changes anything above.
+Comments (Giscus) and the container build. Each is a separate step; none of them changes anything above.
+
+## Standing pages
+
+Imprint and privacy policy live in `src/content/pages/` — in this repository
+rather than the content one, because they are site furniture, they must deploy
+without the article checkout, and they change when the site changes rather than
+when something gets written. Same filename convention as posts, so slugs read
+naturally per language: `impressum.de.mdx` and `imprint.en.mdx` are one page
+under a shared `translationKey`.
+
+**The German text is the operative one.** The English versions exist so
+readers can find the contact details; they are not a second independent legal
+text. Both are drafts with bracketed placeholders and need filling in and
+checking before the site goes public.
+
+The privacy policy describes how the site is actually built — self-hosted
+fonts, no cookies, client-side search, `localStorage` only for the theme. That
+means it goes out of date the moment the technology changes. Anything that adds
+a third party (comments, analytics, a CDN) needs the policy updated in the same
+branch.
 
 ## Search
 

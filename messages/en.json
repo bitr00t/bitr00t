@@ -32,5 +32,8 @@
     "hint": "Type to search titles, topics and article text.",
     "noResults": "Nothing matches “{query}”.",
     "failed": "Search is unavailable. Reload the page to try again."
+  },
+  "page": {
+    "updated": "Last updated {date}"
   }
 }

@@ -1,4 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { getLegalLinks } from "@/lib/pages";
 import { site } from "@/lib/site";
 
 export async function SiteFooter() {
@@ -6,12 +9,22 @@ export async function SiteFooter() {
     getTranslations("footer"),
     getLocale(),
   ]);
+  const legal = await getLegalLinks(locale as Locale);
 
   return (
     <footer className="border-rule text-ink-faint mx-auto mt-24 max-w-5xl border-t px-6 py-8 font-mono text-xs">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <span>{t("colophon")}</span>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center gap-5">
+          {legal.map((page) => (
+            <Link
+              key={page.slug}
+              href={`/${page.slug}`}
+              className="hover:text-ink transition-colors"
+            >
+              {page.title}
+            </Link>
+          ))}
           <a
             href={`/${locale}/feed.xml`}
             className="hover:text-ink transition-colors"

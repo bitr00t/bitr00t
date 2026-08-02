@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { getAllPosts, getTranslation } from "@/lib/content";
+import { getAllPageSlugs, getPage, getPageTranslation } from "@/lib/pages";
 import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -78,6 +79,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         alternates: { languages },
       });
     }
+  }
+
+  // Standing pages. Unlike a language index, these exist in every language
+  // regardless of what has been published, so they are not filtered by
+  // `active` — an imprint with nothing to read is still an imprint.
+  for (const { locale, page: slug } of await getAllPageSlugs()) {
+    const page = await getPage(slug, locale);
+    if (!page) continue;
+
+    const languages: Record<string, string> = {
+      [locale]: absoluteUrl(`/${locale}/${slug}`),
+    };
+    for (const other of routing.locales.filter((l) => l !== locale)) {
+      const translated = await getPageTranslation(page.translationKey, other);
+      if (translated) languages[other] = absoluteUrl(`/${other}/${translated}`);
+    }
+    const fallback = languages[routing.defaultLocale];
+    if (fallback) languages["x-default"] = fallback;
+
+    entries.push({
+      url: absoluteUrl(`/${locale}/${slug}`),
+      lastModified: page.updated,
+      alternates: { languages },
+    });
   }
 
   return entries;
