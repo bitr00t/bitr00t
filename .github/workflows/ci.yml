@@ -69,3 +69,61 @@ jobs:
       # shipping an article dated "Invalid Date".
       - name: Build
         run: yarn build
+
+  # Separate job: the image build repeats the compile, so running it in
+  # parallel keeps the feedback on lint and types fast.
+  image:
+    name: image
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check out articles
+        uses: actions/checkout@v7
+        with:
+          repository: bitr00t/bitr00t-content
+          path: content
+          token: ${{ secrets.CONTENT_REPO_TOKEN }}
+          persist-credentials: false
+
+      - uses: docker/setup-buildx-action@v3
+
+      # Build only — publishing comes with the deploy workflow. The point here
+      # is that a broken Dockerfile fails in the pull request rather than at
+      # deployment time.
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: bitr00t:ci
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=https://bitr00t.dev
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # An image that starts but serves nothing is the failure mode worth
+      # catching: missing static assets or a missing content checkout both
+      # produce a container that looks healthy from the outside.
+      - name: Smoke test
+        run: |
+          docker run -d --name bitr00t-ci -p 3000:3000 bitr00t:ci
+          for i in $(seq 1 30); do
+            if curl -sf -o /dev/null http://127.0.0.1:3000/en; then break; fi
+            sleep 2
+          done
+
+          curl -sf -o /dev/null http://127.0.0.1:3000/en
+          curl -sf -o /dev/null http://127.0.0.1:3000/en/writing/zkc
+          curl -sf -o /dev/null http://127.0.0.1:3000/sitemap.xml
+
+          css=$(curl -sf http://127.0.0.1:3000/en | grep -o '/_next/static/[^"]*\.css' | head -1)
+          test -n "$css" || { echo "no stylesheet referenced"; exit 1; }
+          curl -sf -o /dev/null "http://127.0.0.1:3000$css" \
+            || { echo "stylesheet 404 — .next/static missing from the image"; exit 1; }
+
+          docker logs bitr00t-ci
+          docker rm -f bitr00t-ci
